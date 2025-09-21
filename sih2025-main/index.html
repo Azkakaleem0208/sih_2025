@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ocean Hazard Reporting Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="src_/logo_samudra.jpg" alt="SAMUDRA Logo" height="60" width="100">
+               <b> Ocean Hazard Reporting</b>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-outline btn-lg" href="login.html">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero-section">
+        <div class="container text-center py-5">
+            <h1 class="display-4 text-white">Crowdsourced Ocean Hazard Reporting</h1>
+            <p class="lead text-white">Help protect coastal communities by reporting ocean hazards in real-time</p>
+            <div class="mt-4">
+                <a href="signup.html" class="btn btn-light btn-lg me-2">Sign Up</a>
+                <a href="login.html" class="btn btn-outline-light btn-lg">Login</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h2 class="section-title">About SAMUDRA</h2>
+                    <p>The<b> Smart AI Monitoring for Unified Disaster Reporting & Awareness (SAMUDRA)</b> provides ocean information and advisory services to support disaster risk reduction and ensure maritime safety for coastal stakeholders.</p>
+                    <p>Our early warning services cover hazards such as tsunamis, storm surges, high waves, swell surges, and coastal currents, enabling authorities and communities to make informed decisions during ocean-related emergencies.</p>
+                </div>
+                <div class="col-md-6">
+                    <img src="src_/oceanimg2.avif" width="700" alt="SAMUDRA operations" class="img-fluid rounded">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title text-center mb-5">Platform Features</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-map-marker-alt feature-icon"></i>
+                            <h3 class="card-title">Geotagged Reporting</h3>
+                            <p class="card-text">Submit geotagged reports, photos, or videos of observed ocean hazards via our platform.</p>
+                            <img src="src_/geotag_.jpg" height="150" width="250">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-chart-line feature-icon"></i>
+                            <h3 class="card-title">Real-time Dashboard</h3>
+                            <p class="card-text">View aggregated data on a dynamic dashboard with interactive maps and hotspots.</p>
+                            <img src="src_/hazard.jpg" height="150" width="250">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-comments feature-icon"></i>
+                            <h3 class="card-title">Social Media Analytics</h3>
+                            <p class="card-text">Monitor social media feeds for hazard-related discussions and trends.</p>
+                            <img src="src_/socialmedia.webp" height="150" width="250">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Role Section -->
+    <section id="roles" class="py-5">
+        <div class="container">
+            <h2 class="section-title text-center mb-5">User Roles</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100 border-primary">
+                        <div class="card-header bg-primary text-white">
+                            <h3 class="card-title text-center mb-0">Citizens</h3>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">View hazard alerts and weather reports</li>
+                                <li class="list-group-item">Access interactive hazard maps</li>
+                                <li class="list-group-item">Upload geotagged hazard reports</li>
+                                <li class="list-group-item">Read safety blogs and guidelines</li>
+                                <li class="list-group-item">Receive emergency notifications</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 border-success">
+                        <div class="card-header bg-success text-white">
+                            <h3 class="card-title text-center mb-0">Analysts</h3>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Verify citizen-submitted reports</li>
+                                <li class="list-group-item">Monitor weather predictions</li>
+                                <li class="list-group-item">Analyze social media trends</li>
+                                <li class="list-group-item">Track government updates</li>
+                                <li class="list-group-item">Approve content for publication</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 border-danger">
+                        <div class="card-header bg-danger text-white">
+                            <h3 class="card-title text-center mb-0">Administrators</h3>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Issue emergency alerts via SMS/calls</li>
+                                <li class="list-group-item">Manage user accounts and permissions</li>
+                                <li class="list-group-item">Access comprehensive analytics</li>
+                                <li class="list-group-item">Coordinate emergency responses</li>
+                                <li class="list-group-item">Configure system settings</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta-section py-5 text-white text-center">
+        <div class="container">
+            <h2>Join Our Network of Ocean Hazard Reporters</h2>
+            <p class="lead">Help protect coastal communities by contributing valuable real-time information</p>
+            <a href="signup.html" class="btn btn-light btn-lg mt-3">Sign Up Now</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Ocean Hazard Reporting Platform</h5>
+                    <p>Smart AI Monitoring for Unified Disaster Reporting & Awareness (SAMUDRA)</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white">Home</a></li>
+                        <li><a href="#about" class="text-white">About</a></li>
+                        <li><a href="#features" class="text-white">Features</a></li>
+                        <li><a href="login.html" class="text-white">Login</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Contact Us</h5>
+                    <address>
+                        <p>SAMUDRA<br>
+                        Yashwantnagar,PCMC,<br>
+                        Pune -411018, India</p>
+                        <p>Email: info@SAMUDRA.gov.in<br>
+                        Phone: +91-40-23886000</p>
+                    </address>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <p>&copy; 2025 Ocean Hazard Reporting Platform. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="scripts.js"></script>
+</body>
+</html>

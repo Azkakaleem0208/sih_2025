@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disaster Management Analyst Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css">
+    <style>
+        body {
+            background: #f5f7fa;
+            min-height: 100vh;
+            padding: 20px 0;
+        }
+        .card {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            border-radius: 10px;
+            border: none;
+        }
+        .card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px 10px 0 0 !important;
+            font-weight: bold;
+        }
+        .text-center{
+            background-color: rgb(168, 212, 251);
+        }
+        .col-12{
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <h1 class="text-center mb-4">Disaster Management Analyst Dashboard</h1>
+        
+        <!-- Filters Section -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="fas fa-filter me-1"></i>
+                Data Filters
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3 mb-2">
+                        <label for="disaster-type" class="form-label">Disaster Type</label>
+                        <select class="form-select" id="disaster-type">
+                            <option value="all">All Types</option>
+                            <option value="flood">Flood</option>
+                            <option value="earthquake">Earthquake</option>
+                            <option value="cyclone">Cyclone</option>
+                            <option value="fire">Fire</option>
+                            <option value="landslide">Landslide</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <label for="region" class="form-label">Region</label>
+                        <select class="form-select" id="region">
+                            <option value="all">All India</option>
+                            <option value="north">North India</option>
+                            <option value="south">South India</option>
+                            <option value="east">East India</option>
+                            <option value="west">West India</option>
+                            <option value="central">Central India</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <label for="time-period" class="form-label">Time Period</label>
+                        <select class="form-select" id="time-period">
+                            <option value="7">Last 7 Days</option>
+                            <option value="30">Last 30 Days</option>
+                            <option value="90">Last 3 Months</option>
+                            <option value="180">Last 6 Months</option>
+                            <option value="365">Last Year</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <label for="severity" class="form-label">Severity</label>
+                        <select class="form-select" id="severity">
+                            <option value="all">All Levels</option>
+                            <option value="high">High</option>
+                            <option value="medium">Medium</option>
+                            <option value="low">Low</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12 text-center">
+                        <button class="btn btn-primary" id="apply-filters">Apply Filters</button>
+                        <button class="btn btn-outline-secondary ms-2" id="reset-filters">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card text-center p-3">
+                    <i class="fas fa-exclamation-triangle fa-2x mb-2 text-primary"></i>
+                    <h3 id="total-incidents">247</h3>
+                    <p class="text-muted">Total Incidents</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center p-3">
+                    <i class="fas fa-users fa-2x mb-2 text-primary"></i>
+                    <h3 id="affected-people">12,583</h3>
+                    <p class="text-muted">People Affected</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center p-3">
+                    <i class="fas fa-house-damage fa-2x mb-2 text-primary"></i>
+                    <h3 id="infrastructure-damage">₹1.2B</h3>
+                    <p class="text-muted">Infrastructure Damage</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center p-3">
+                    <i class="fas fa-ambulance fa-2x mb-2 text-primary"></i>
+                    <h3 id="response-time">42m</h3>
+                    <p class="text-muted">Avg. Response Time</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Data Visualization Charts -->
+        <div class="row">
+            <!-- Incidents by Type Chart -->
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <i class="fas fa-chart-bar me-1"></i>
+                        Incidents by Type
+                    </div>
+                    <div class="card-body">
+                        <canvas id="incidents-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Severity Distribution Chart -->
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <i class="fas fa-chart-pie me-1"></i>
+                        Severity Distribution
+                    </div>
+                    <div class="card-body">
+                        <canvas id="severity-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Incident Timeline Chart -->
+            <div class="col-md-8 mb-4">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <i class="fas fa-chart-line me-1"></i>
+                        Incident Timeline
+                    </div>
+                    <div class="card-body">
+                        <canvas id="timeline-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Resource Allocation Chart -->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <i class="fas fa-truck me-1"></i>
+                        Resource Allocation
+                    </div>
+                    <div class="card-body">
+                        <canvas id="resource-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Interactive Hazard Analysis Map -->
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-map-marked-alt me-1"></i>
+                        Interactive Hazard Analysis Map
+                    </div>
+                    <div class="card-body p-0">
+                        <div id="hazard-map" style="height: 400px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+    
+    <script>
+        // Initialize charts when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            initCharts();
+            initHazardMap();
+            
+            // Add event listeners for filters
+            document.getElementById('apply-filters').addEventListener('click', applyFilters);
+            document.getElementById('reset-filters').addEventListener('click', resetFilters);
+        });
+
+        // Initialize all charts
+        function initCharts() {
+            // Incidents by Type Chart
+            const incidentsCtx = document.getElementById('incidents-chart').getContext('2d');
+            new Chart(incidentsCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Flood', 'Earthquake', 'Cyclone', 'Landslide', 'Fire'],
+                    datasets: [{
+                        label: 'Number of Incidents',
+                        data: [65, 42, 28, 37, 75],
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 0.6)',
+                            'rgba(255, 99, 132, 0.6)',
+                            'rgba(153, 102, 255, 0.6)',
+                            'rgba(165, 42, 42, 0.6)',
+                            'rgba(255, 159, 64, 0.6)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: { y: { beginAtZero: true } }
+                }
+            });
+
+            // Severity Distribution Chart
+            const severityCtx = document.getElementById('severity-chart').getContext('2d');
+            new Chart(severityCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['High', 'Medium', 'Low'],
+                    datasets: [{
+                        data: [35, 45, 20],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.6)',
+                            'rgba(255, 205, 86, 0.6)',
+                            'rgba(75, 192, 192, 0.6)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true
+                }
+            });
+
+            // Timeline Chart
+            const timelineCtx = document.getElementById('timeline-chart').getContext('2d');
+            new Chart(timelineCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+                    datasets: [{
+                        label: 'Incidents Over Time',
+                        data: [12, 19, 15, 17, 22, 30, 35, 28, 25],
+                        fill: false,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: { y: { beginAtZero: true } }
+                }
+            });
+
+            // Resource Allocation Chart
+            const resourceCtx = document.getElementById('resource-chart').getContext('2d');
+            new Chart(resourceCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Medical', 'Food & Water', 'Shelter', 'Rescue Teams', 'Transportation'],
+                    datasets: [{
+                        data: [25, 20, 15, 30, 10],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.6)',
+                            'rgba(54, 162, 235, 0.6)',
+                            'rgba(255, 206, 86, 0.6)',
+                            'rgba(75, 192, 192, 0.6)',
+                            'rgba(153, 102, 255, 0.6)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true
+                }
+            });
+        }
+
+        // Apply filters function
+        function applyFilters() {
+            const disasterType = document.getElementById('disaster-type').value;
+            const region = document.getElementById('region').value;
+            const timePeriod = document.getElementById('time-period').value;
+            const severity = document.getElementById('severity').value;
+            
+            console.log('Applying filters:', { disasterType, region, timePeriod, severity });
+            alert('Filters applied successfully');
+        }
+
+        // Reset filters function
+        function resetFilters() {
+            document.getElementById('disaster-type').value = 'all';
+            document.getElementById('region').value = 'all';
+            document.getElementById('time-period').value = '7';
+            document.getElementById('severity').value = 'all';
+            alert('Filters reset successfully');
+        }
+        
+        // Initialize Hazard Map
+        function initHazardMap() {
+            const map = L.map('hazard-map').setView([20.5937, 78.9629], 5);
+            
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+            
+            // Sample disaster data
+            const disasterData = [
+                { lat: 19.0760, lng: 72.8777, type: 'flood', severity: 'high', title: 'Mumbai Floods' },
+                { lat: 13.0827, lng: 80.2707, type: 'cyclone', severity: 'high', title: 'Chennai Cyclone' },
+                { lat: 31.1048, lng: 77.1734, type: 'earthquake', severity: 'medium', title: 'Shimla Earthquake' },
+                { lat: 11.6854, lng: 76.1320, type: 'landslide', severity: 'medium', title: 'Wayanad Landslide' },
+                { lat: 28.7041, lng: 77.1025, type: 'fire', severity: 'low', title: 'Delhi Fire' }
+            ];
+            
+            // Add markers for each disaster
+            disasterData.forEach(disaster => {
+                let markerColor;
+                switch(disaster.severity) {
+                    case 'high': markerColor = 'red'; break;
+                    case 'medium': markerColor = 'orange'; break;
+                    case 'low': markerColor = 'green'; break;
+                    default: markerColor = 'blue';
+                }
+                
+                const marker = L.marker([disaster.lat, disaster.lng]).addTo(map);
+                marker.bindPopup(`
+                    <strong>${disaster.title}</strong><br>
+                    Type: ${disaster.type}<br>
+                    Severity: <span style="color:${markerColor}">${disaster.severity}</span>
+                `);
+            });
+        }
+    </script>
+</body>
+</html>
